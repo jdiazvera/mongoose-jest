@@ -4,20 +4,21 @@ import path from "path";
 
 import { loadApiEndpoints } from "./controllers/api";
 
+// set up mongoose
+mongoose.connect(
+  "mongodb+srv://mongo:123...%40bcD.@cluster0.nsrarlo.mongodb.net/myDele"
+);
+const database = mongoose.connection;
+database.on("error", (error) => {
+  console.log(error);
+});
+
+database.once("connected", () => {
+  console.log("Database connected");
+});
+
 // Create Express server
 const app = express();
-
-// set up mongoose
-mongoose
-  .connect(
-    "mongodb+srv://mongo:123...%40bcD.@cluster0.nsrarlo.mongodb.net/myDele"
-  )
-  .then(() => {
-    console.log("Database connected");
-  })
-  .catch(() => {
-    console.log("Error connecting to database");
-  });
 
 // Express configuration
 app.set("port", process.env.PORT || 3000);
